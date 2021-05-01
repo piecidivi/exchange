@@ -9,6 +9,6 @@
         <title>Exchange</title>
     </head>
     <body  class="bg-no-repeat bg-fixed bg-center bg-project-picture font-serif font-bold">
-        <h1 class="border-2 border-white flex justify-center w-80 py-4 px-36 rounded-xl top-16 m-auto bg-green-500 text-blue-700 text-center text-3xl">Exchange</h1>
+        <h1 class="border-2 border-white flex justify-center w-80 py-4 px-36 rounded-xl mt-16 mr-auto ml-auto bg-green-500 text-blue-700 text-center text-3xl">Exchange</h1>
     </body>
 </html>
