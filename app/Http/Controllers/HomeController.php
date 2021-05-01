@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
+use App\Services\Manage\ShowCurrencyService;
+
 
 class HomeController extends Controller
 {
+    private ShowCurrencyService $showCurrencyService;
+
+    public function __construct(ShowCurrencyService $showCurrencyService)
+    {
+        $this->showCurrencyService = $showCurrencyService;
+    }
+
     public function index(): string
     {
-        return view("index");
+        $currency = json_encode($this->showCurrencyService->getAll());
+        return view("index")->with("currency", $currency);
     }
 }

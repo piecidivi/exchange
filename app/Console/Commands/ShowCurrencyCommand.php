@@ -41,7 +41,7 @@ class ShowCurrencyCommand extends Command
      */
     public function handle(): int
     {
-        $currency = $this->showCurrencyService->execute($this->argument("symbol"));
+        $currency = $this->showCurrencyService->getBySymbol($this->argument("symbol"));
         $rate = number_format($currency->rate / 1000000, 2);
         echo "{$currency->symbol} {$rate}\n";
         return 0;

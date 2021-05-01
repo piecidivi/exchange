@@ -27,6 +27,8 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "epic-spinners": "^1.1.0",
+        "vue-axios": "^3.2.4",
         "webpack": "^5.36.2",
         "webpack-cli": "^4.6.0"
     }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services\Import;
-
 
 use App\Models\Currency;
 
@@ -24,5 +22,12 @@ class ImportCurrenciesService
                 "rate" => (int) ((float) $currency["Rate"] * 100000)
             ]);
         }
+
+        Currency::updateOrCreate([
+            "symbol" => "EUR"
+        ], [
+            "symbol" => "EUR",
+            "rate" => 100000
+        ]);
     }
 }
