@@ -43,7 +43,7 @@ class ConvertCurrencyController extends Controller
 
         $cur1 = $this->showCurrencyService->getBySymbol($request["cur1"]);
         $cur2 = $this->showCurrencyService->getBySymbol($request["cur2"]);
-        $num = $request["num"];
+        $num = intval($request["num"]);
 
         $conversion = $request["dir"] === "cur2" ? $this->convertCurrencyService->convert($cur1, $cur2, $num) :
             $this->convertCurrencyService->convert($cur2, $cur1, $num);

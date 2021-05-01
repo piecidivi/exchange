@@ -9,7 +9,7 @@ class ConvertCurrencyService
     public function convert(Currency $cur1, Currency $cur2, string $num): array
     {
         $rate = $cur2->rate / $cur1->rate;
-        $conversion = intval($num) * $rate;
+        $conversion = $num * $rate;
         return [$conversion, $rate];
     }
 }

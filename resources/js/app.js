@@ -21,8 +21,7 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('v-index',require('./views/Index').default);
-Vue.component('data-component', require('./components/Data').default);
+Vue.component('v-component',require('./views/Main').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
