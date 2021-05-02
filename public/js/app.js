@@ -1932,8 +1932,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
+var total;
+var rate;
+var errorMessage;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Update",
   props: ["currency"],
@@ -1942,11 +1946,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      spinning: false
+      spinning: false,
+      total: total,
+      rate: rate,
+      errorMessage: errorMessage
     };
   },
   mounted: function mounted() {
-    // console.log(this.currency[0].symbol);
     console.log(this.currency);
   },
   methods: {
@@ -1963,8 +1969,34 @@ __webpack_require__.r(__webpack_exports__);
         _this.spinning = false;
       }, 2000);
     },
-    testMe: function testMe() {
-      console.log("This is click! :)");
+    convert: function convert(direction) {
+      var _this2 = this;
+
+      this.spinning = true;
+      var cur1 = document.getElementById("cur1").value;
+      var cur2 = document.getElementById("cur2").value;
+      var num = document.getElementById("number").value;
+      var url = direction === "right" ? "/convert?cur1=" + cur1 + "&cur2=" + cur2 + "&num=" + num : "/convert?cur1=" + cur2 + "&cur2=" + cur1 + "&num=" + num;
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get(url).then(function (response) {
+        console.log(response);
+
+        if (response.data[0] === "FAIL") {
+          var obj = response.data[1];
+          _this2.errorMessage = Object.values(obj)[0][0]; // console.log(errorMessage);
+
+          _this2.spinning = false;
+        }
+
+        if (response.data[0] === "OK") {
+          console.log(response.data[1]);
+          _this2.total = parseFloat(response.data[1][0]).toFixed(2);
+          _this2.rate = parseFloat(response.data[1][1]).toFixed(2);
+          _this2.errorMessage = "";
+          _this2.spinning = false;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -42706,11 +42738,11 @@ var render = function() {
       _vm.spinning
         ? _c("spinner", { staticClass: "flex justify-center mt-8" })
         : _c("div", { staticClass: "flex justify-center mt-8 opacity-0" }, [
-            _vm._v("This is opacity text"),
+            _vm._v("Spinner replacement text"),
             _c("br"),
-            _vm._v("Some more text"),
+            _vm._v("Spinner replacement text"),
             _c("br"),
-            _vm._v("Some more text")
+            _vm._v("Spinner replacement text")
           ]),
       _vm._v(" "),
       _c("div", { staticClass: "flex justify-center mt-16 text-center mb-5" }, [
@@ -42729,7 +42761,12 @@ var render = function() {
                     {
                       staticClass:
                         "border-2 border-blue-500 rounded focus-within:outline-none p-1 mb-0.5",
-                      attrs: { id: "cur1", name: "cur1", required: "" }
+                      attrs: {
+                        disabled: _vm.spinning,
+                        id: "cur1",
+                        name: "cur1",
+                        required: ""
+                      }
                     },
                     [
                       _c(
@@ -42762,7 +42799,7 @@ var render = function() {
                       attrs: { type: "button", disabled: _vm.spinning },
                       on: {
                         click: function($event) {
-                          return _vm.testMe()
+                          return _vm.convert("left")
                         }
                       }
                     },
@@ -42770,9 +42807,42 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(0),
+                _c(
+                  "td",
+                  {
+                    staticClass:
+                      "border-2 border-blue-700 border-collapse py-2 px-5"
+                  },
+                  [
+                    _c("input", {
+                      attrs: {
+                        disabled: _vm.spinning,
+                        id: "number",
+                        type: "text",
+                        placeholder: "Enter number...",
+                        pattern: "[0-9]+"
+                      },
+                      domProps: { value: _vm.total }
+                    })
+                  ]
+                ),
                 _vm._v(" "),
-                _vm._m(1),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "flex justify-center fas m-auto rounded-xl  border-2 bg-yellow-400 border-blue-500 border-opacity-0 hover:border-blue-500 p-1 px-3 text-2xl rounded",
+                      attrs: { disabled: _vm.spinning, type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.convert("right")
+                        }
+                      }
+                    },
+                    [_vm._v("\n                        ")]
+                  )
+                ]),
                 _vm._v(" "),
                 _c("td", [
                   _c(
@@ -42780,7 +42850,12 @@ var render = function() {
                     {
                       staticClass:
                         "border-2 border-blue-500 rounded focus-within:outline-none p-1 mb-0.5",
-                      attrs: { id: "cur2", name: "cur2", required: "" }
+                      attrs: {
+                        disabled: _vm.spinning,
+                        id: "cur2",
+                        name: "cur2",
+                        required: ""
+                      }
                     },
                     [
                       _c(
@@ -42805,77 +42880,39 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(2)
+              _c("tr", [
+                _c("td"),
+                _vm._v(" "),
+                _c("td"),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass:
+                      "border-2 border-blue-700 border-collapse py-2 px-5 w-28"
+                  },
+                  [_vm._v(_vm._s(_vm.rate))]
+                ),
+                _vm._v(" "),
+                _c("td"),
+                _vm._v(" "),
+                _c("td")
+              ])
             ])
           ]
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "flex justify-center mt-8 text-2xl text-green-800" },
+        [_vm._v(_vm._s(_vm.errorMessage))]
+      )
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "td",
-      { staticClass: "border-2 border-blue-700 border-collapse py-2 px-5" },
-      [
-        _c("input", {
-          attrs: {
-            id: "some_id",
-            oninput: "",
-            type: "text",
-            placeholder: "Enter number...",
-            pattern: "[0-9]+"
-          }
-        })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "button",
-        {
-          staticClass:
-            "flex justify-center fas m-auto rounded-xl  border-2 bg-yellow-400 border-blue-500 border-opacity-0 hover:border-blue-500 p-1 px-3 text-2xl rounded",
-          attrs: { type: "button", id: "right", name: "right", onclick: "" }
-        },
-        [_vm._v("\n                        ")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c(
-        "td",
-        {
-          staticClass:
-            "border-2 border-blue-700 border-collapse py-2 px-5 w-28",
-          attrs: { id: "output_rate" }
-        },
-        [_vm._v('"1->X or X<-1"')]
-      ),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
