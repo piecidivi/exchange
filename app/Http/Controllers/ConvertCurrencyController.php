@@ -42,7 +42,7 @@ class ConvertCurrencyController extends Controller
 
         $cur1 = $this->showCurrencyService->getBySymbol($request["cur1"]);
         $cur2 = $this->showCurrencyService->getBySymbol($request["cur2"]);
-        $amount = intval($request["num"]);
+        $amount = floatval($request["num"]);
 
         try {
             $conversion = $this->convertCurrencyService->convert($cur1, $cur2, $amount);

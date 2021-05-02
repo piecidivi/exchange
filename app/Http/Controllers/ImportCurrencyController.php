@@ -10,7 +10,9 @@ class ImportCurrencyController extends Controller
     private ImportCurrenciesService $importCurrenciesService;
     private ShowCurrencyService $showCurrencyService;
 
-    public function __construct(ImportCurrenciesService $importCurrenciesService, ShowCurrencyService $showCurrencyService)
+    public function __construct(
+        ImportCurrenciesService $importCurrenciesService,
+        ShowCurrencyService $showCurrencyService)
     {
         $this->importCurrenciesService = $importCurrenciesService;
         $this->showCurrencyService = $showCurrencyService;

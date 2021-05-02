@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static updateOrCreate(array $array, array $array1)
  * @method static where(string $string, string $string1, string $symbol)
+ * @property mixed rate
+ * @property mixed symbol
  */
 class Currency extends Model
 {
@@ -29,11 +31,11 @@ class Currency extends Model
         }
 
         if ($this->symbol === $currency->symbol) {
-            return [ $amount, 1];
+            return [$amount, 1];
         }
 
         $rate = $currency->rate / $this->rate;
         $conversion = $amount * $rate;
-        return [ $conversion, $rate];
+        return [$conversion, $rate];
     }
 }

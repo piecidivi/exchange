@@ -1,37 +1,31 @@
 <template>
     <div>
-        <button class="border-2 border-blue-700 border-opacity-0 font-bold hover:border-blue-300 hover:bg-green-600 hover:text-white flex justify-center w-80 py-4 px-4 w-24 rounded-xl mt-16 mr-auto ml-auto text-white text-center text-3xl"
+        <button class="flex justify-center mt-16 mr-auto ml-auto w-80 py-4 px-4 w-24 border-2 border-blue-700 border-opacity-0 hover:border-blue-300 hover:bg-green-600 text-center text-white text-3xl font-bold hover:text-white rounded-xl"
                 type="button" :disabled="spinning" @click="updateRates()">UPDATE RATES
         </button>
         <spinner class="flex justify-center mt-8" v-if="spinning"></spinner>
         <div class="flex justify-center mt-8 opacity-0" v-else>Spinner replacement text<br/>Spinner replacement text<br/>Spinner replacement text</div>
-        <div class="flex justify-center mt-16 text-center mb-5">
-            <table id="exchange_table" class="table-fixed text-center">
+        <div class="flex justify-center mt-16 mb-5 text-center ">
+            <table class="table-fixed text-center">
                 <tbody>
                     <tr>
-                        <td>
-                            <select :disabled="spinning" class="border-2 border-blue-500 rounded focus-within:outline-none p-1 mb-0.5"
-                                    id="cur1" name="cur1" required>
+                        <td class="bg-yellow-100 rounded focus-within:outline-none mb-0.5">
+                            <select class="bg-yellow-100 w-full h-full text-2xl" id="cur1" :disabled="spinning" required>
                                 <option disabled selected value>--SELECT--</option>
                                 <option v-for="record in currency" :key="record.id" :value="record.symbol">{{ record.symbol }}</option>
                             </select>
                         </td>
-                        <td>
-                            <button class="flex justify-center fas m-auto rounded-xl  border-2 bg-yellow-400 border-blue-500 border-opacity-0 hover:border-blue-500 p-1 px-3 text-2xl rounded"
-                                    type="button" :disabled="spinning" @click="convert('left')">&#xf100;
-                            </button>
+                        <td class="bg-yellow-400 hover:bg-yellow-500 px-5 text-2xl rounded">
+                            <button class="h-10 fas" type="button" :disabled="spinning" @click="convert('left')">&#xf100;</button>
                         </td>
-                        <td class="border-2 border-blue-700 border-collapse py-2 px-5">
-                            <input :disabled="spinning" id="number" type="text" placeholder="Enter number..." :value="total" pattern="[0-9]+">
+                        <td class="">
+                            <input id="number" class="h-10 w-80 text-2xl text-center" type="text" :disabled="spinning" placeholder="Enter number..." :value="total">
                         </td>
-                        <td>
-                            <button :disabled="spinning" class="flex justify-center fas m-auto rounded-xl  border-2 bg-yellow-400 border-blue-500 border-opacity-0 hover:border-blue-500 p-1 px-3 text-2xl rounded"
-                                    type="button" @click="convert('right')">&#xf101;
-                            </button>
+                        <td class="bg-yellow-400 hover:bg-yellow-500 px-5 text-2xl rounded">
+                            <button class="h-10 fas" type="button" :disabled="spinning" @click="convert('right')">&#xf101;</button>
                         </td>
-                        <td>
-                            <select :disabled="spinning" class="border-2 border-blue-500 rounded focus-within:outline-none p-1 mb-0.5"
-                                    id="cur2" name="cur2" required>
+                        <td class="bg-yellow-100 rounded focus-within:outline-none mb-0.5">
+                            <select class="bg-yellow-100 w-full h-full text-2xl" id="cur2" :disabled="spinning" required>
                                 <option disabled selected value>--SELECT--</option>
                                 <option v-for="record in currency" :key="record.id" :value="record.symbol">{{ record.symbol }}</option>
                             </select>
@@ -40,14 +34,14 @@
                     <tr>
                         <td></td>
                         <td></td>
-                        <td class="border-2 border-blue-700 border-collapse py-2 px-5 w-28">{{ rate }}</td>
+                        <td class="bg-yellow-100 py-2 px-5 w-48 text-left text-2xl rounded">Buy for 1: {{ rate }}</td>
                         <td></td>
                         <td></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="flex justify-center mt-8 text-2xl text-green-800">{{ errorMessage }}</div>
+        <div class="flex justify-center mt-8 text-blue-900 text-3xl">{{ errorMessage }}</div>
     </div>
 </template>
 
@@ -102,7 +96,8 @@
                         if (response.data[0] === "FAIL") {
                             const obj = response.data[1];
                             this.errorMessage = Object.values(obj)[0][0];
-                            // console.log(errorMessage);
+                            this.total = null;
+                            this.rate = null;
                             this.spinning = false;
                         }
                         if (response.data[0] === "OK") {

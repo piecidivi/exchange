@@ -19,7 +19,7 @@ class ImportCurrenciesService
                 "symbol" => $currency["ID"]
             ], [
                 "symbol" => $currency["ID"],
-                "rate" => (int) ((float) $currency["Rate"] * 100000)
+                "rate" => (int)((float)$currency["Rate"] * 100000)
             ]);
         }
 
