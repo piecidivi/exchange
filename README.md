@@ -1,3 +1,3 @@
 # exchange
 
-![Alt Text] (https://github.com/piecidivi/exchange/exchange-gif.gif)
+![Alt Text](exchange-gif.gif)
